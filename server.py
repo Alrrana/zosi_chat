@@ -17,7 +17,8 @@ tcp_socket.bind(('', 777))
 tcp_socket.listen(200)
 connection, addr = tcp_socket.accept()
 
-file = open('C:\\Users\\alran\\PycharmProjects\\try2\\2 (2).txt', 'wb')
+file_name = connection.recv(1024).decode()
+file = open('G:\\' + file_name, 'wb')
 
 while True:
     try:
