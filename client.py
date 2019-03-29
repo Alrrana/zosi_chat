@@ -19,7 +19,7 @@ def send_file(event=None):
     file.close()
 
 
-host = '192.168.255.255'
+host = '192.168.56.255'
 my_ip = gethostbyname(gethostname())
 
 udp_socket = socket(AF_INET, SOCK_DGRAM)

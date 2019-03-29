@@ -27,4 +27,5 @@ while True:
 
 print(client_ip)
 
+file.close()
 # file = open('C:\\Users\\gfhfl\\Downloads', 'rb')
