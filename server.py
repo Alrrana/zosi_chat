@@ -18,7 +18,7 @@ tcp_socket.listen(200)
 connection, addr = tcp_socket.accept()
 
 file_name = connection.recv(1024).decode()
-file = open('G:\\' + file_name, 'wb')
+file = open('C:\\Users\\alran\\' + file_name, 'wb')
 
 while True:
     try:

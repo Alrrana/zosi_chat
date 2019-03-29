@@ -19,6 +19,9 @@ def send_file(event=None):
     data = file.read()
     tcp_socket.send(data)
     file.close()
+    my_msg.set("{quit}")
+    top.destroy()
+    exit()
 
 
 host = '192.168.56.255'
@@ -33,7 +36,7 @@ server_ip, musor = udp_socket.recvfrom(1024)
 tcp_socket = socket(AF_INET, SOCK_STREAM)
 
 top = tkinter.Tk()
-top.title("Chat")
+top.title("File Sender")
 
 messages_frame = tkinter.Frame(top)
 my_msg = tkinter.StringVar()  # For the messages to be sent.
