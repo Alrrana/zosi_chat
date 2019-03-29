@@ -20,9 +20,13 @@ connection, addr = tcp_socket.accept()
 file = open('C:\\Users\\alran\\PycharmProjects\\try2\\2 (2).txt', 'wb')
 
 while True:
-    data = connection.recv(1024)
-    file.write(data)
-    if not data:
+    try:
+        connection.settimeout(5.0)
+        data = connection.recv(1024)
+        file.write(data)
+        if not data:
+            break
+    except Exception:
         break
 
 print(client_ip)

@@ -11,6 +11,7 @@ def on_closing(event=None):
 
 
 def send_file(event=None):
+    tcp_socket.connect((server_ip, 777))
     if str_file_path.get() == "":
         return
     file = open(str_file_path.get(), 'rb')
@@ -29,7 +30,6 @@ udp_socket.sendto(str.encode(my_ip), (host, 777))
 server_ip, musor = udp_socket.recvfrom(1024)
 
 tcp_socket = socket(AF_INET, SOCK_STREAM)
-tcp_socket.connect((server_ip, 777))
 
 top = tkinter.Tk()
 top.title("Chat")
