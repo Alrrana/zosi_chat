@@ -20,12 +20,12 @@ def handle_client(client):  # Takes client socket as argument.
     welcome = 'Welcome %s! If you ever want to quit, type {quit} to exit.' % name
     client.send(welcome.encode("utf8"))
     msg = "%s has joined the chat!" % name
-    broadcast(msg.decode("utf8"))
+    broadcast(msg)
     clients[client] = name
 
     while True:
         msg = client.recv(BUFSIZ)
-        if msg != "{quit}".decode("utf8"):
+        if msg != "{quit}":
             broadcast(msg, name + ": ")
         else:
             client.send("{quit}".encode("utf8"))
