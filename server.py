@@ -1,62 +1,30 @@
-"""Server for multithreaded (asynchronous) chat application."""
-from socket import AF_INET, socket, SOCK_STREAM
-from threading import Thread
+from socket import *
 
+BUFF_SIZE = 1024
 
-def accept_incoming_connections():
-    """Sets up handling for incoming clients."""
-    while True:
-        client, client_address = SERVER.accept()
-        print("%s:%s has connected." % client_address)
-        client.send("Greetings from the cave! Now type your name and press enter!".encode("utf8"))
-        addresses[client] = client_address
-        Thread(target=handle_client, args=(client,)).start()
+host = ''
+my_ip = gethostbyname(gethostname())
 
+udp_socket = socket(AF_INET, SOCK_DGRAM)
+udp_socket.bind(('', 777))
 
-def handle_client(client):  # Takes client socket as argument.
-    """Handles a single client connection."""
+client_ip, server_ip = udp_socket.recvfrom(BUFF_SIZE)
+udp_socket.sendto(str.encode(my_ip), (client_ip.decode(), 778))
+udp_socket.close()
 
-    name = client.recv(BUFSIZ).decode("utf8")
-    welcome = 'Welcome %s! If you ever want to quit, type {quit} to exit.' % name
-    client.send(welcome.encode("utf8"))
-    msg = "%s has joined the chat!" % name
-    broadcast(msg)
-    clients[client] = name
+tcp_socket = socket(AF_INET, SOCK_STREAM)
+tcp_socket.bind(('', 777))
+tcp_socket.listen(200)
+connection, addr = tcp_socket.accept()
 
-    while True:
-        msg = client.recv(BUFSIZ)
-        if msg != "{quit}":
-            broadcast(msg, name + ": ")
-        else:
-            client.send("{quit}".encode("utf8"))
-            client.close()
-            del clients[client]
-            broadcast("%s has left the chat." % name.decode("utf8"))
-            break
+file = open('C:\\Users\\alran\\PycharmProjects\\try2\\2 (2).txt', 'wb')
 
+while True:
+    data = connection.recv(1024)
+    file.write(data)
+    if not data:
+        break
 
-def broadcast(msg, prefix=""):  # prefix is for name identification.
-    """Broadcasts a message to all the clients."""
+print(client_ip)
 
-    for sock in clients:
-        sock.send(prefix.encode("utf8") + msg)
-
-
-clients = {}
-addresses = {}
-
-HOST = ''
-PORT = 33000
-BUFSIZ = 1024
-ADDR = (HOST, PORT)
-
-SERVER = socket(AF_INET, SOCK_STREAM)
-SERVER.bind(ADDR)
-
-if __name__ == "__main__":
-    SERVER.listen(5)
-    print("Waiting for connection...")
-    ACCEPT_THREAD = Thread(target=accept_incoming_connections)
-    ACCEPT_THREAD.start()
-    ACCEPT_THREAD.join()
-    SERVER.close()
+# file = open('C:\\Users\\gfhfl\\Downloads', 'rb')
