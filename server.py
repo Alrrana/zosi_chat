@@ -21,7 +21,7 @@ file = open('C:\\Users\\alran\\PycharmProjects\\try2\\2 (2).txt', 'wb')
 
 while True:
     try:
-        connection.settimeout(5.0)
+        connection.settimeout(0.1)
         data = connection.recv(1024)
         file.write(data)
         if not data:
@@ -29,7 +29,7 @@ while True:
     except Exception:
         break
 
-print(client_ip)
+print('Файл принят '+file_name)
 
 file.close()
 # file = open('C:\\Users\\gfhfl\\Downloads', 'rb')

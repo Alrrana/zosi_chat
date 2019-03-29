@@ -11,9 +11,10 @@ def on_closing(event=None):
 
 
 def send_file(event=None):
-    tcp_socket.connect((server_ip, 777))
     if str_file_path.get() == "":
         return
+    tcp_socket.connect((server_ip, 777))
+    tcp_socket.send(str.encode(str_file_path.get().split('\\')[-1]))
     file = open(str_file_path.get(), 'rb')
     data = file.read()
     tcp_socket.send(data)
